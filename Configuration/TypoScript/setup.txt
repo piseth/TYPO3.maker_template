@@ -1,0 +1,154 @@
+plugin.tx_markertemplate_pi1 {
+  view {
+    templateRootPaths.0 = EXT:marker_template/Resources/Private/Templates/
+    templateRootPaths.1 = {$plugin.tx_markertemplate_pi1.view.templateRootPath}
+    partialRootPaths.0 = EXT:marker_template/Resources/Private/Partials/
+    partialRootPaths.1 = {$plugin.tx_markertemplate_pi1.view.partialRootPath}
+    layoutRootPaths.0 = EXT:marker_template/Resources/Private/Layouts/
+    layoutRootPaths.1 = {$plugin.tx_markertemplate_pi1.view.layoutRootPath}
+  }
+  persistence {
+    storagePid = {$plugin.tx_markertemplate_pi1.persistence.storagePid}
+    #recursive = 1
+  }
+  features {
+    #skipDefaultArguments = 1
+  }
+  mvc {
+    #callDefaultActionIfActionCantBeResolved = 1
+  }
+}
+
+plugin.tx_markertemplate._CSS_DEFAULT_STYLE (
+    textarea.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    input.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    .tx-marker-template table {
+        border-collapse:separate;
+        border-spacing:10px;
+    }
+
+    .tx-marker-template table th {
+        font-weight:bold;
+    }
+
+    .tx-marker-template table td {
+        vertical-align:top;
+    }
+
+    .typo3-messages .message-error {
+        color:red;
+    }
+
+    .typo3-messages .message-ok {
+        color:green;
+    }
+)
+
+
+pageTemplate {
+  includeCSS {
+  bootstrapCss = {$markertemplate.path}/templates/bootstrap/css/bootstrap.min.css
+    bootstrapCss {
+      media = screen
+      disableCompression = 1
+    }
+    custom = {$markertemplate.path}/templates/bootstrap/css/custom.css
+    custom {
+      media = screen
+      disableCompression = 1
+    }
+    breakpoint1Css = {$markertemplate.path}/templates/bootstrap/css/breakpoint1.css
+    breakpoint1Css {
+      media = screen
+      disableCompression = 1
+    }
+    breakpoint2Css = {$markertemplate.path}/templates/bootstrap/css/breakpoint2.css
+    breakpoint2Css {
+      media = screen
+      disableCompression = 1
+    }
+  }
+
+  includeJSFooterlibs {
+    jQuery = {$markertemplate.path}/templates/bootstrap/js/jquery-1.9.1.min.js
+    jQuery {
+      disableCompression = 1
+      excludeFromConcatenation = 1
+    }
+    bootstrapJs = {$markertemplate.path}/templates/bootstrap/js/bootstrap.min.js
+    bootstrapJs {
+      disableCompression = 1
+      excludeFromConcatenation = 1
+    }
+  }
+  includeJSFooter {
+    
+    custom = {$markertemplate.path}/templates/bootstrap/js/custom.js
+    custom {
+      disableCompression = 1
+      excludeFromConcatenation = 1
+    }
+    custom-responsive = {$markertemplate.path}/templates/bootstrap/js/custom-responsive.js
+    custom-responsive {
+      disableCompression = 1
+      excludeFromConcatenation = 1
+    }
+
+  }
+}
+lib.mainMenu = COA
+lib.mainMenu {
+  10 = HMENU
+  10 {
+    entryLevel = 0
+
+    1 = TMENU
+    1 {
+      wrap = <ul class="nav navbar-nav"> | </ul>
+      noBlur = 1
+      expAll = 1
+      NO {
+        ATagTitle.field = title
+        stdWrap.htmlSpecialChars = 1
+        wrapItemAndSub = <li class="first"> | </li> |*| <li> | </li> |*| <li> | </li>
+      }
+
+      ACT < .NO
+      ACT = 1
+      ACT {
+            wrapItemAndSub = <li class="first active"> | </li> |*| <li class="active"> | </li> |*| <li class="active"> | </li>
+      }
+    }
+  }
+}
+pageTemplate = PAGE
+pageTemplate.10 = TEMPLATE
+pageTemplate.10.workOnSubpart = DOCUMENT_BODY
+pageTemplate.10 {
+  template = FILE
+  //template.file = {$markertemplate.path}/templates/bootstrap/index.html
+  template.file.stdWrap.cObject = CASE
+  template.file.stdWrap.cObject {
+     key.data = levelfield:-1, backend_layout_next_level, slide
+     key.override.field = backend_layout
+     default = TEXT
+     default.value = {$markertemplate.path}/templates/bootstrap/index.html
+     2 = TEXT
+     2.value = {$markertemplate.path}/templates/bootstrap/sub.html
+  } 
+  subparts {
+    MAIN_MENU = < lib.mainMenu
+    ## main content
+    MAIN_CONTENT < styles.content.get
+    MAIN_CONTENT.select.where = colPos = 101
+  }
+}
+
