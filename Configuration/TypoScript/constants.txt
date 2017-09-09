@@ -15,3 +15,5 @@ plugin.tx_markertemplate_pi1 {
 }
 
 markertemplate.path = EXT:marker_template/Resources/Fileadmin
+# you need to overwrite 
+# markertemplate.path = fileadmin

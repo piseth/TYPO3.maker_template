@@ -75,8 +75,9 @@ pageTemplate {
       media = screen
       disableCompression = 1
     }
+	rtehtmlareaCss  = EXT:rtehtmlarea/Resources/Public/Css/ContentCss/Default.css
   }
-
+  
   includeJSFooterlibs {
     jQuery = {$markertemplate.path}/templates/bootstrap/js/jquery-1.9.1.min.js
     jQuery {
@@ -139,8 +140,10 @@ pageTemplate.10 {
   template.file.stdWrap.cObject {
      key.data = levelfield:-1, backend_layout_next_level, slide
      key.override.field = backend_layout
+	 # note default is the backend_layout id 1.
      default = TEXT
      default.value = {$markertemplate.path}/templates/bootstrap/index.html
+	 # note 2 below is id of backend_layout id 2.
      2 = TEXT
      2.value = {$markertemplate.path}/templates/bootstrap/sub.html
   } 
@@ -148,7 +151,8 @@ pageTemplate.10 {
     MAIN_MENU = < lib.mainMenu
     ## main content
     MAIN_CONTENT < styles.content.get
-    MAIN_CONTENT.select.where = colPos = 101
+	# colPos = 1 is position of content in each backend_layout
+    MAIN_CONTENT.select.where = colPos = 1
   }
 }
 
